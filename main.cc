@@ -191,6 +191,9 @@ main (int argc, char* const* argv)
 
       std::cout << "Alto: " << est.alto
       std::cout << "Ancho: " << est.ancho
+
+      cv::imshow("Canal", canales[c]);
+      cv::waitKey(0);
     }
 
     std::cout << "Canales: " << img.channels() << std::endl;
