@@ -15,6 +15,7 @@
 #include <iostream>
 #include <exception>
 #include <string>
+#include <vector>
 //Includes para OpenCV, Descomentar según los módulo utilizados.
 #include <opencv2/core/core.hpp>
 //#include <opencv2/highgui/highgui.hpp> 
@@ -123,6 +124,19 @@ parseCLI (int argc, char* const* argv, CLIParams& params) throw ()
 
 #endif
 
+struct Estadisticos{
+  int ancho;
+  int alto;
+
+};
+
+void estadisticos(const cv::Mat& img, Estadisticos& est){
+
+  est.ancho = img.cols;
+  est.alto = img.rows;
+
+};
+
 //export PKG_CONFIG_PATH=/usr/local/opencv-2.4.13/lib/pkgconfig
 
 int
@@ -164,8 +178,21 @@ main (int argc, char* const* argv)
       return -1;
     }
 
-    std::cout << "Ancho: " << img.cols << std::endl;
-    std::cout << "Alto: " << img.rows << std::endl;
+    Estadisticos est;
+    std::vector <cv::Mat> canales;
+    cv::split(img,canales);
+    for(unsigned c =0; c<canales.size();++c)
+    {
+      Estadisticos est;
+      estadisticos(canales[c],est);
+      std::cout << "----------------------"
+      std::cout << "Los estadisticos del canal " << c << std::endl
+      std::cout << "----------------------"
+
+      std::cout << "Alto: " << est.alto
+      std::cout << "Ancho: " << est.ancho
+    }
+
     std::cout << "Canales: " << img.channels() << std::endl;
     
   }
